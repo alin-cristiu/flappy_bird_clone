@@ -38,7 +38,7 @@ public class EndScreen : UIScreen
     private void TapToContinue()
     {
         _continueButton.gameObject.SetActive(false);
-        Events.OnGoToMainMenu?.Invoke();
+        Events.Instance.OnGoToMainMenu?.Invoke();
     }
 
     private void OnEnable()

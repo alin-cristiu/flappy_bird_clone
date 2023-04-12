@@ -14,20 +14,40 @@ public class UIManager : MonoBehaviour
     }
 
     [SerializeField] private List<UIScreenStructure> _uiScreens;
+    private Dictionary<ScreenType, UIScreen> _uiScreensDictionary = new Dictionary<ScreenType, UIScreen>();
+    private UIScreen _lastActiveScreen;
+
+    private void Awake()
+    {
+        SetupScreensDictionary();
+    }
+
+    private void SetupScreensDictionary()
+    {
+        for (int i = 0; i < _uiScreens.Count; i++)
+        {
+            if (!_uiScreensDictionary.ContainsKey(_uiScreens[i].screenType))
+            {
+                _uiScreensDictionary.Add(_uiScreens[i].screenType, _uiScreens[i].screen);
+            }
+
+            _uiScreens[i].screen.HideScreen();
+        }
+    }
 
     public void LoadScreen(ScreenType screenType)
     {
-        for(int i = 0; i < _uiScreens.Count; i++)
+        if (!_uiScreensDictionary.ContainsKey(screenType))
         {
-            if (_uiScreens[i].screenType == screenType)
-            {
-                _uiScreens[i].screen.ShowScreen();
-            }
-            else
-            {
-                _uiScreens[i].screen.HideScreen();
-            }
+            SetupScreensDictionary();
         }
+
+        _uiScreensDictionary[screenType].ShowScreen();
+        if (_lastActiveScreen != null)
+        {
+            _lastActiveScreen.HideScreen();
+        }
+        _lastActiveScreen = _uiScreensDictionary[screenType];
     }
 
     public void ResetUI()

@@ -5,17 +5,24 @@ using UnityEngine;
 
 public class Events : MonoBehaviour
 {
-    public static Action OnUpdateScore = null;
-    public static Action<int> OnResumeCountDown = null;
-    public static Action<float> OnNewPipeSpawned = null;
-    public static Action<Pipe> OnPipeIsOutOfScreen = null;
-    public static Action<float> OnNewBushSpawned = null;
-    public static Action<Bush> OnBushIsOutOfScreen = null;
-    public static Action OnResetScenery = null;
+    public static Events Instance;
 
-    public static Action OnPlay = null;
-    public static Action OnPause = null;
-    public static Action OnResume = null;
-    public static Action OnGoToMainMenu = null;
-    public static Action OnGameOver = null;
+    public Action OnUpdateScore = null;
+    public Action<int> OnResumeCountDown = null;
+    public Action<float> OnNewPipeSpawned = null;
+    public Action<Pipe> OnPipeIsOutOfScreen = null;
+    public Action<float> OnNewBushSpawned = null;
+    public Action<Bush> OnBushIsOutOfScreen = null;
+    public Action OnResetScenery = null;
+
+    public Action OnPlay = null;
+    public Action OnPause = null;
+    public Action OnResume = null;
+    public Action OnGoToMainMenu = null;
+    public Action OnGameOver = null;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 }

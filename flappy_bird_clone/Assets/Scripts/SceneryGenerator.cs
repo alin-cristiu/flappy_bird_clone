@@ -27,8 +27,8 @@ public class SceneryGenerator : MonoBehaviour
             _pipePool[_pipePool.Count - 1].CreatePooledItem(_pipePrefabs[i], _startPipeCount);
         }
 
-        Events.OnPipeIsOutOfScreen = OnPipeIsOutOfScreen;
-        Events.OnBushIsOutOfScreen = OnBushIsOutOfScreen;
+        Events.Instance.OnPipeIsOutOfScreen = OnPipeIsOutOfScreen;
+        Events.Instance.OnBushIsOutOfScreen = OnBushIsOutOfScreen;
     }
 
     public void ResetFirstPositon()

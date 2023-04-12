@@ -6,20 +6,20 @@ public class Bush : MonoBehaviour
 {
     private void Start()
     {
-        Events.OnNewBushSpawned += OnNewBushSpawned;
-        Events.OnResetScenery += OnResetScenery;
+        Events.Instance.OnNewBushSpawned = OnNewBushSpawned;
+        Events.Instance.OnResetScenery = OnResetScenery;
     }
 
     private void OnNewBushSpawned(float cameraPos)
     {
         if (transform.position.x < cameraPos)
         {
-            Events.OnBushIsOutOfScreen?.Invoke(this);
+            Events.Instance.OnBushIsOutOfScreen?.Invoke(this);
         }
     }
 
     private void OnResetScenery()
     {
-        Events.OnBushIsOutOfScreen?.Invoke(this);
+        Events.Instance.OnBushIsOutOfScreen?.Invoke(this);
     }
 }

@@ -9,20 +9,20 @@ public class Pipe : MonoBehaviour
 
     private void Start()
     {
-        Events.OnNewPipeSpawned += OnNewPipeSpawned;
-        Events.OnResetScenery += OnResetScenery;
+        Events.Instance.OnNewPipeSpawned = OnNewPipeSpawned;
+        Events.Instance.OnResetScenery = OnResetScenery;
     }
 
     private void OnNewPipeSpawned(float cameraPos)
     {
         if (transform.position.x < cameraPos)
         {
-            Events.OnPipeIsOutOfScreen?.Invoke(this);
+            Events.Instance.OnPipeIsOutOfScreen?.Invoke(this);
         }
     }
 
     private void OnResetScenery()
     {
-        Events.OnPipeIsOutOfScreen?.Invoke(this);
+        Events.Instance.OnPipeIsOutOfScreen?.Invoke(this);
     }
 }

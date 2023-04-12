@@ -128,7 +128,7 @@ public class BirdControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Events.OnGameOver?.Invoke();
+        Events.Instance.OnGameOver?.Invoke();
     }
 
     private void AnimateBird()

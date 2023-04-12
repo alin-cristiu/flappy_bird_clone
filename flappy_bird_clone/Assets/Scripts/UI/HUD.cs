@@ -17,13 +17,13 @@ public class HUD : UIScreen
         _highscore.text = Global.highestScore == 0 ? "" : Constants.HIGHEST_SCORE + "\n" + Global.highestScore;
 
         _currentScore.text = Constants.SCORE + "\n0";
-        Events.OnUpdateScore += OnUpdateSCore;
-        Events.OnResumeCountDown += OnResumeCountDown;
+        Events.Instance.OnUpdateScore = OnUpdateSCore;
+        Events.Instance.OnResumeCountDown = OnResumeCountDown;
     }
 
     private void ShowPause()
     {
-        Events.OnPause?.Invoke();
+        Events.Instance.OnPause?.Invoke();
     }
 
     public override void ShowScreen()

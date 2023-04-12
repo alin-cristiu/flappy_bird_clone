@@ -649,7 +649,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -140, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &283845418
 MonoBehaviour:
@@ -698,12 +698,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 60
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 30
+  m_fontSizeMax: 60
   m_fontStyle: 3
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -2404,6 +2404,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428142138}
   m_CullTransparentMesh: 1
+--- !u!1 &1453160970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1453160972}
+  - component: {fileID: 1453160971}
+  m_Layer: 0
+  m_Name: EventsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1453160971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453160970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84fb80dfa8a599b4f915ba699713d318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1453160972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453160970}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 568, y: 386.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1495927142
 GameObject:
   m_ObjectHideFlags: 0
@@ -2574,6 +2618,8 @@ GameObject:
   - component: {fileID: 1532022414}
   - component: {fileID: 1532022416}
   - component: {fileID: 1532022417}
+  - component: {fileID: 1532022419}
+  - component: {fileID: 1532022418}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2596,13 +2642,13 @@ MonoBehaviour:
   _uiManager: {fileID: 841015452}
   _sceneryGenerator: {fileID: 1532022416}
   _pipeManager: {fileID: 1532022417}
+  _birdFollower: {fileID: 1532022419}
   _cameraTransform: {fileID: 963194228}
   _gameFieldOffset: 10
   _maxPipeOffset: 10
   _minPipeOffset: 2
   _pipeOffsetReductionStep: 50
   _bushOffset: 12
-  _scenery: {fileID: 326899701}
   _bird: {fileID: 314266712}
   _initBirdHeight: 3
 --- !u!4 &1532022415
@@ -2656,6 +2702,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneryGenerator: {fileID: 1532022416}
+--- !u!114 &1532022418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532022413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 310fd661230d222479d1531b7248d2a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraTransform: {fileID: 963194228}
+--- !u!114 &1532022419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532022413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7fe321de1c521c4396e6c54f5d2b990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bird: {fileID: 314266709}
+  _cameraTransform: {fileID: 963194228}
+  _scenery: {fileID: 326899701}
 --- !u!1 &1651537850
 GameObject:
   m_ObjectHideFlags: 0

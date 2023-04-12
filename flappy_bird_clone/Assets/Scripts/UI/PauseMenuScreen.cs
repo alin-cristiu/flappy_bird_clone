@@ -17,13 +17,13 @@ public class PauseMenuScreen : UIScreen
 
     private void Resume()
     {
-        Events.OnResume?.Invoke();
+        Events.Instance.OnResume?.Invoke();
     }
 
     private void ReturnToMainMenu()
     {
         Global.SaveScore();
-        Events.OnGoToMainMenu?.Invoke();
+        Events.Instance.OnGoToMainMenu?.Invoke();
     }
 
     public override void ShowScreen()

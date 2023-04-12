@@ -12,19 +12,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private SceneryGenerator _sceneryGenerator;
     [SerializeField] private PipeManager _pipeManager;
-
+    [SerializeField] private BirdFollower _birdFollower;
+    [Header("Gameplay variables")]
     [SerializeField] private Transform _cameraTransform;
     [SerializeField] private float _gameFieldOffset;
     [SerializeField] private float _maxPipeOffset;
     [SerializeField] private float _minPipeOffset;
     [SerializeField] private int _pipeOffsetReductionStep;
     [SerializeField] private float _bushOffset;
-
-    [SerializeField] private Transform _scenery;
+    [Header("Bird variables")]
     [SerializeField] private BirdControl _bird;
     [SerializeField] private float _initBirdHeight;
 
-    private int _currCamPos;
+    
     private Vector3 _initCameraPosition;
     private float _birdCameraOffset;
     private float _currPipeOffset;
@@ -39,8 +39,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _initCameraPosition = _cameraTransform.transform.position;
-        _birdCameraOffset = _bird.transform.position.x - _initCameraPosition.x;
+        Application.targetFrameRate = 60;
+
+        _birdFollower.SetupBirdFollower();
         _sceneryGenerator.InitPools();
         _currPipeOffset = _maxPipeOffset;
         _uiManager.LoadScreen(UIManager.ScreenType.MainMenu);
@@ -52,11 +53,11 @@ public class GameManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        Events.OnPlay = OnPlay;
-        Events.OnPause = OnPause;
-        Events.OnResume = OnResume;
-        Events.OnGoToMainMenu = OnGoToMainMenu;
-        Events.OnGameOver = OnGameOver;
+        Events.Instance.OnPlay = OnPlay;
+        Events.Instance.OnPause = OnPause;
+        Events.Instance.OnResume = OnResume;
+        Events.Instance.OnGoToMainMenu = OnGoToMainMenu;
+        Events.Instance.OnGameOver = OnGameOver;
     }
 
     private void OnPlay()
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
         _uiManager.ResetUI();
         HideBird();
         _bird.ResetBird(_initCameraPosition.x + _birdCameraOffset, _initBirdHeight);
-        _cameraTransform.position = _initCameraPosition;
+        _birdFollower.ResetCamera();
         ResetScenery();
     }
 
@@ -113,7 +114,7 @@ public class GameManager : MonoBehaviour
 
     private void ResetScenery()
     {
-        Events.OnResetScenery?.Invoke();
+        Events.Instance.OnResetScenery?.Invoke();
         _currPipeOffset = _maxPipeOffset;
         _sceneryGenerator.ResetFirstPositon();
         _pipeManager.ResetFirstPositon();
@@ -127,9 +128,7 @@ public class GameManager : MonoBehaviour
             GeneratePipes();
             GenerateBushes();
         }
-        CameraFollowBird();
-        UpdateScore();
-
+        
         if(_resumeTime > 0)
         {
             ResumeCountDown();
@@ -141,7 +140,7 @@ public class GameManager : MonoBehaviour
         if(_pipeManager.GetFirstPipePosition() < _cameraTransform.position.x + _gameFieldOffset)
         {
             _pipeManager.GeneratePipes(_currPipeOffset);
-            Events.OnNewPipeSpawned?.Invoke(_cameraTransform.position.x - _gameFieldOffset);
+            Events.Instance.OnNewPipeSpawned?.Invoke(_cameraTransform.position.x - _gameFieldOffset);
             if (_currPipeOffset > _minPipeOffset)
             {
                 ReducePipeOffset();
@@ -159,41 +158,20 @@ public class GameManager : MonoBehaviour
         if (_sceneryGenerator.GetFirstBushPosition() < _cameraTransform.position.x + _bushOffset)
         {
             _sceneryGenerator.GenerateBush(_bushOffset);
-            Events.OnNewBushSpawned?.Invoke(_cameraTransform.position.x - _bushOffset);
+            Events.Instance.OnNewBushSpawned?.Invoke(_cameraTransform.position.x - _bushOffset);
         }
-    }
-
-    private void CameraFollowBird()
-    {
-        _cameraTransform.position = new Vector3(_bird.transform.position.x + _birdCameraOffset, _cameraTransform.position.y, _cameraTransform.position.z);
-        _scenery.transform.position = new Vector3(_cameraTransform.position.x, _scenery.transform.position.y, _scenery.transform.position.z);
-    }
-
-    private void UpdateScore()
-    {
-        _currCamPos = GetRoundedCamPos();
-        if (Global.score < _currCamPos)
-        {
-            Global.score = _currCamPos;
-            Events.OnUpdateScore?.Invoke();
-        }
-    }
-
-    private int GetRoundedCamPos()
-    {
-        return Mathf.RoundToInt(_cameraTransform.position.x);
     }
 
     private void ResumeCountDown()
     {
         _resumeTime -= Time.deltaTime;
 
-        Events.OnResumeCountDown?.Invoke(Mathf.RoundToInt(_resumeTime));
+        Events.Instance.OnResumeCountDown?.Invoke(Mathf.RoundToInt(_resumeTime));
 
         if(_resumeTime <= 0)
         {
             _resumeTime = -1;
-            Events.OnResumeCountDown?.Invoke(Mathf.RoundToInt(_resumeTime));
+            Events.Instance.OnResumeCountDown?.Invoke(Mathf.RoundToInt(_resumeTime));
             Resume();
         }
     }

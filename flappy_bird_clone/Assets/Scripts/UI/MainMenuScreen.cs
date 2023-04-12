@@ -13,8 +13,16 @@ public class MainMenuScreen : UIScreen
         _playButton.onClick.RemoveAllListeners();
         _playButton.onClick.AddListener(Play);
 
-        _exitButton.onClick.RemoveAllListeners();
-        _exitButton.onClick.AddListener(Exit);
+        if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            _exitButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            _exitButton.gameObject.SetActive(true);
+            _exitButton.onClick.RemoveAllListeners();
+            _exitButton.onClick.AddListener(Exit);
+        }
 
         Global.LoadHighscore();
         _highscore.text = Global.highestScore == 0 ? "" : Constants.HIGHEST_SCORE + "\n" + Global.highestScore;
@@ -22,7 +30,7 @@ public class MainMenuScreen : UIScreen
 
     private void Play()
     {
-        Events.OnPlay?.Invoke();
+        Events.Instance.OnPlay?.Invoke();
     }
 
     private void Exit()
